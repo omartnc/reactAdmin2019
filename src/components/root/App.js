@@ -8,12 +8,12 @@ const hist = createBrowserHistory();
 function App() {
   return (
     <Router history={hist}>
-    <Switch>
-      <Route path="/admin" render={props => <AdminLayout {...props} />} />
-      <Redirect from="/" to="/admin/dashboard" />
-      <Route component={NotFound} />
-    </Switch>
-  </Router>
+      <Switch>
+        <Route path="/admin" render={props => <AdminLayout {...props} />} />
+        <Redirect from="/" to="/admin/dashboard" />
+        <Route component={NotFound} />
+      </Switch>
+    </Router>
   );
 }
 
