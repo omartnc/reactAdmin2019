@@ -11,29 +11,30 @@ import AdminLayout from "./Admin";
 import LoginLayout from "./Login";
 import NotFound from "../common/NotFound";
 
+
 // Check for token
 if (localStorage.jwtToken) {
+  debugger;
   // Set auth token header auth
   setAuthToken(localStorage.jwtToken);
   // Decode token and get user info and exp
   const decoded = jwt_decode(localStorage.jwtToken);
   // Set user and isAuthenticated
-  this.props.actions.setCurrentUser(decoded);
+  setCurrentUser(decoded);
 
   // Check for expired token
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     // Logout user
-    this.props.actions.logoutUser();
+    logoutUser();
     // Redirect to login
     window.location.href = '/login';
   }
 }
-
 const hist = createBrowserHistory();
 class App extends Component {
-
   render() {
+
     return (
       <Router history={hist}>
         <Switch>
@@ -64,6 +65,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-  mapDispatchToProps,
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(App);
