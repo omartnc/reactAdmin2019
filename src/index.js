@@ -7,6 +7,7 @@ import 'alertifyjs/build/css/alertify.min.css';
 import "./assets/scss/black-dashboard-react.scss";
 import "./assets/demo/demo.css";
 import "./assets/css/nucleo-icons.css";
+import "./assets/css/app.min.css";
 import {Provider} from "react-redux";
 import configureStore from "./redux/reducers/configureStore";
 import {BrowserRouter} from "react-router-dom";

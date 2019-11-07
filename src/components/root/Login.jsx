@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from "react-redux";
+import * as userActions from "../../redux/actions/authActions";
+import { bindActionCreators } from "redux";
 import {
   Button,
   Card,
@@ -9,29 +12,64 @@ import {
   Form,
   Input,
   Row,
-  Col,
-  Container
+  Col
 } from "reactstrap";
 
-export default class Login extends Component {
+ class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      email: '',
+      password: ''
+    };
+
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+  componentDidMount() {
+    if (this.props.authReducer.isAuthenticated) {
+      this.props.history.push('/');
+    }
+  }
+ 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.authReducer.isAuthenticated) {
+      this.props.history.push('/');
+    }
+    
+  }
+      onChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+      }
+  
+      onSubmit(e) {
+        e.preventDefault();
+    
+        const userData = {
+          email: this.state.email,
+          password: this.state.password
+        };
+    
+        this.props.actions.loginUser(userData);
+      }
     render() {
         return (
            
         <div className="min-h-fullscreen bg-img center-vh p-20  pace-done" style={{backgroundImage:"url(http://dogutech.xyz/Contents/Files/2019/06/11/0b61a1-flz3.jpg)"}}>
-            <Container>
-              <Card>
+          
+              <Card className="card card-round card-shadowed px-50 py-30 w-400px mb-0">
+                  <Form onSubmit={this.onSubmit}>
                 <CardHeader>
-                  <h5 className="title">Login</h5>
+                  <strong style={{textAlign :"center",fontSize: "27px",color:""}}>Login</strong>
                 </CardHeader>
                 <CardBody>
-                  <Form>
                     <Row>
                       <Col lg="12">
                         <FormGroup>
                           <label>
                             Email address
                           </label>
-                          <Input placeholder="mike@email.com" type="email" />
+                          <Input placeholder="Enter e-mail..." name="email" type="text"  value={this.state.email} onChange={this.onChange}/>
                         </FormGroup>
                       </Col>
                       <Col lg="12">
@@ -39,21 +77,40 @@ export default class Login extends Component {
                           <label>Password </label>
                           <Input
                             type="password"
+                            placeholder="Enter password..." name="password" value={this.state.password} onChange={this.onChange}
                           />
                         </FormGroup>
                       </Col>
                     </Row>
-                   </Form>
                 </CardBody>
                 <CardFooter>
-                  <Button className="btn-fill" color="primary" type="submit">
+                  <Button className="" color="primary" type="submit">
                     Login
                   </Button>
                 </CardFooter>
+                   </Form>
               </Card>
-              </Container>
+              
         </div>
       
         )
     }
 }
+
+function mapStateToProps(state) {
+  return {
+    authReducer: state.authReducer
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+      actions: {
+        loginUser: bindActionCreators(userActions.loginUser, dispatch)
+      }
+  };
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);
