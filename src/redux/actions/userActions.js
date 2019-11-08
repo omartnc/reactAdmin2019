@@ -1,18 +1,8 @@
 import * as actionTypes from "./actionTypes";
+import  handleResponse from "../../utils/handleResponse";
+import  handleError from "../../utils/handleError";
 import axios from 'axios';
-export async function handleResponse(response) {
-    debugger;
-    if (response.status===200) {
-        return response.data
-    }
 
-    const error = await response.text();
-    throw error;
-}
-export function handleError(error) {
-    console.error("Bir hata oluştu");
-    throw error;
-}
 
 
 

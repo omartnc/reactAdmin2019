@@ -12,35 +12,36 @@ import LoginLayout from "./Login";
 import NotFound from "../common/NotFound";
 
 
-// Check for token
-if (localStorage.jwtToken) {
-  debugger;
-  // Set auth token header auth
-  setAuthToken(localStorage.jwtToken);
-  // Decode token and get user info and exp
-  const decoded = jwt_decode(localStorage.jwtToken);
-  // Set user and isAuthenticated
-  setCurrentUser(decoded);
-
-  // Check for expired token
-  const currentTime = Date.now() / 1000;
-  if (decoded.exp < currentTime) {
-    // Logout user
-    logoutUser();
-    // Redirect to login
-    window.location.href = '/login';
-  }
-}
 const hist = createBrowserHistory();
 class App extends Component {
+
   render() {
 
+    // Check for token
+    if (localStorage.jwtToken) {
+      // Set auth token header auth
+      setAuthToken(localStorage.jwtToken);
+      // Decode token and get user info and exp
+      const decoded = jwt_decode(localStorage.jwtToken);
+        debugger;
+      // Set user and isAuthenticated
+      //this.props.actions.setCurrentUser(decoded);  
+
+      // Check for expired token
+      const currentTime = Date.now() / 1000;
+      if (decoded.exp < currentTime) {
+        // Logout user
+        this.props.actions.logoutUser();
+        // Redirect to login
+        window.location.href = '/login';
+      }
+    }
     return (
       <Router history={hist}>
         <Switch>
           <Route path="/login" render={props => <LoginLayout {...props} />} />
           <PrivateRoute path="/admin" render={props => <AdminLayout {...props} />} />
-          <PrivateRoute from="/" to="/admin/dashboard" />
+          <PrivateRoute from="/" to="/admin/dashboard" render={props => <AdminLayout {...props} />} />
           <Route component={NotFound} />
         </Switch>
       </Router>

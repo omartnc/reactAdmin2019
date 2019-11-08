@@ -17,7 +17,6 @@
 */
 import Dashboard from "./components/views/Dashboard.jsx";
 import UserList from "./components/views/users/UserList";
-import Icons from "./components/views/Icons";
 
 var routes = [
   {
@@ -29,19 +28,6 @@ var routes = [
   },
   {
     name: "System Management"
-  },
-  {
-    path: "#",
-    name: "Login Settings",
-    icon: "tim-icons icon-settings-gear-63",
-    layout: "/admin"
-  },
-  {
-    path: "/icons",
-    name: "User Access Manager",
-    icon: "tim-icons icon-settings-gear-63",
-    component: Icons,
-    layout: "/admin"
   },
   {
     path: "/users",

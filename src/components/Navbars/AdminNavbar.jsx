@@ -19,6 +19,9 @@ import {
   Container,
   Modal
 } from "reactstrap";
+import { connect } from "react-redux";
+import * as userActions from "../../redux/actions/authActions";
+import { bindActionCreators } from "redux";
 
 class AdminNavbar extends React.Component {
   constructor(props) {
@@ -68,7 +71,11 @@ class AdminNavbar extends React.Component {
       modalSearch: !this.state.modalSearch
     });
   };
+  onLogoutClick= () => {
+    this.props.actions.logoutUser();
+  }
   render() {
+    
     return (
       <>
         <Navbar
@@ -181,12 +188,9 @@ class AdminNavbar extends React.Component {
                     <NavLink tag="li">
                       <DropdownItem className="nav-item">Profile</DropdownItem>
                     </NavLink>
-                    <NavLink tag="li">
-                      <DropdownItem className="nav-item">Settings</DropdownItem>
-                    </NavLink>
                     <DropdownItem divider tag="li" />
                     <NavLink tag="li">
-                      <DropdownItem className="nav-item">Log out</DropdownItem>
+                      <DropdownItem className="nav-item" onClick={()=>this.onLogoutClick()}>Log out</DropdownItem>
                     </NavLink>
                   </DropdownMenu>
                 </UncontrolledDropdown>
@@ -218,4 +222,20 @@ class AdminNavbar extends React.Component {
   }
 }
 
-export default AdminNavbar;
+function mapStateToProps(state) {
+  return {
+    authReducer: state.authReducer
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+      actions: {
+        logoutUser: bindActionCreators(userActions.logoutUser, dispatch)
+      }
+  };
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminNavbar);

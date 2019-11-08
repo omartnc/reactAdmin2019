@@ -1,33 +1,21 @@
 import axios from 'axios';
 import setAuthToken from '../../utils/setAuthToken';
+import  handleResponse from "../../utils/handleResponse";
+import  handleError from "../../utils/handleError";
 import jwt_decode from 'jwt-decode';
 
 import * as actionTypes from "./actionTypes";
-export async function handleResponse(response) {
-    debugger;
-    if (response.status===200) {
-        return response.data
-    }
 
-    const error = await response.text();
-    throw error;
-}
-
-export function handleError(error) {
-    console.error("Bir hata oluştu");
-    throw error;
-}
 
 
 // Login - Get User Token
 export const loginUser = userData => dispatch => {
-    debugger;
   axios
     .post('http://api.dogu.tech/api/Auth/login', userData)
     .then(handleResponse)
     .then(res => {
       // Save to localStorage
-      const  token  = res.token;
+      const  token  = "Bearer "+res.token;
       // Set token to ls
       localStorage.setItem('jwtToken', token);
       // Set token to Auth header
@@ -51,6 +39,7 @@ export const setCurrentUser = decoded => {
 
 // Log user out
 export const logoutUser = () => dispatch => {
+  debugger;
   // Remove token from localStorage
   localStorage.removeItem('jwtToken');
   // Remove auth header for future requests
