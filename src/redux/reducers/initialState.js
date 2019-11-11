@@ -1,8 +1,6 @@
 export default {
     users: [],
-    auth: {
-        user: {},
-        isAuthenticated: false
-    },
+    currentUser: {},
+    isAuthenticated: false,
     savedUser: {}
 }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import AdminLayout from "../root/Admin";
 
 const PrivateRoute = ({ component: Component, authReducer, ...rest }) => (
+  
   <Route
     {...rest}
     render={props =>

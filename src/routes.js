@@ -17,6 +17,7 @@
 */
 import Dashboard from "./components/views/Dashboard.jsx";
 import UserList from "./components/views/users/UserList";
+import UserProfile from "./components/views/users/UserProfile";
 
 var routes = [
   {
@@ -35,6 +36,14 @@ var routes = [
     icon: "tim-icons icon-settings-gear-63",
     component: UserList,
     layout: "/admin"
+  },
+  {
+    path: "/save-user/:userId",
+    name: "User Detail",
+    icon: "tim-icons icon-settings-gear-63",
+    component: UserProfile,
+    layout: "/admin",
+    redirect:true
   }
 ];
 export default routes;

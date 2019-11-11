@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, Card, Col, CardHeader, CardTitle, CardBody, Button } from "reactstrap";
+import { Row, Card, Col, CardHeader, CardTitle, CardBody } from "reactstrap";
 import { bindActionCreators } from "redux";
 import * as userActions from "../../../redux/actions/userActions";
 import { Table } from "reactstrap";
@@ -25,18 +25,20 @@ class UserList extends Component {
                                     <thead className="text-primary">
                                         <tr>
                                             <th>#</th>
-                                            <th>Full Name</th>
-                                            <th/>
+                                            <th>Kullanıcı Adı</th>
+                                            <th>Email</th>
+                                            <th>Kayıt Tarihi</th>
+                                            <th>Erişim Yetkileri</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {this.props.users.map(user =>(
                                             <tr key={user.id}>
-                                                <th>{user.id}</th>
-                                                <td><Link to={"/saveuser/" + user.id}>{user.fullName}</Link></td>
-                                                <td>
-                                                    <Button color="success" >ekle</Button>
-                                                </td>
+                                                <th style={{color:"white"}}>{user.id}</th>
+                                                <th style={{color:"white"}}>{user.email}   <Link to={"/admin/save-user/" + user.id}>Edit</Link></th>
+                                                <th style={{color:"white"}}>{user.email}</th>
+                                                <th style={{color:"white"}}>{user.creationDate}</th>
+                                                <td style={{color:"white"}}>1 Gruop 0 Modül <Link to={"/saveuser/" + user.id}>Edit</Link></td>
                                             </tr>
                                         ))}
                                     </tbody>
