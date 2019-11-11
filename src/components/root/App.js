@@ -12,6 +12,7 @@ import AdminLayout from "./Admin";
 import LoginLayout from "./Login";
 import NotFound from "../common/NotFound";
 
+
 // Check for token
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -31,20 +32,23 @@ if (localStorage.jwtToken) {
   }
 }
 
+const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 const hist = createBrowserHistory();
 class App extends Component {
 
   render() {
     return (
       <Provider store={store}>
-        <Router history={hist}>
-          <Switch>
-            <Route path="/login" render={props => <LoginLayout {...props} />} />
-            <PrivateRoute path="/admin" render={props => <AdminLayout {...props} />} />
-            <PrivateRoute path="/" to="/admin/dashboard" render={props => <AdminLayout {...props} />} />
-            <Route component={NotFound} />
-          </Switch>
-        </Router>
+        <React.Suspense fallback={loading()}>
+          <Router history={hist}>
+            <Switch>
+              <Route exact path="/login"  render={props => <LoginLayout {...props} />} />
+              <PrivateRoute path="/admin" to="/admin/dashboard" render={props => <AdminLayout {...props} />} />
+              <PrivateRoute path="/" to="/admin/dashboard" render={props => <AdminLayout {...props} />} />
+              <Route component={NotFound} />
+            </Switch>
+          </Router>
+        </React.Suspense>
       </Provider>
     );
   }

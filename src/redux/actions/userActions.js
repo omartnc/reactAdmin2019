@@ -20,7 +20,7 @@ export function updateUserSuccess(user) {
 
 export function getUsers() {
     return function (dispatch) {
-        let url = "http://api.dogu.tech/api/Authorization/users/list";
+        let url = "/api/Authorization/users/list";
       return  axios
     .get(url)
     .then(handleResponse)

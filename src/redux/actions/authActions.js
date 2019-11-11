@@ -11,7 +11,7 @@ import * as actionTypes from "./actionTypes";
 // Login - Get User Token
 export const loginUser = userData => dispatch => {
   axios
-    .post('http://api.dogu.tech/api/Auth/login', userData)
+    .post('/api/Auth/login', userData)
     .then(handleResponse)
     .then(res => {
       // Save to localStorage

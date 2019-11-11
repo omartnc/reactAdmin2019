@@ -3,13 +3,14 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AdminLayout from "../root/Admin";
 
-const PrivateRoute = ({ component: Component, authReducer, ...rest }) => (
+const PrivateRoute = ({ component: Component, authReducer,to , ...rest}) => (
   
   <Route
     {...rest}
+    to={to}
     render={props =>
       authReducer.isAuthenticated === true ? (
-        <AdminLayout {...props} />
+        <AdminLayout  {...props} />
       ) : (
         <Redirect to="/login" />
       )
