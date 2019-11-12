@@ -6,9 +6,7 @@ export default function loadingReducer(
   action
 ) {
   switch (action.type) {
-    case actionTypes.SET_TRUE_LOADING_SUCCESS:
-      return action.payload;
-    case actionTypes.SET_FALSE_LOADING_SUCCESS:
+    case actionTypes.SET_LOADING_SUCCESS:
       return action.payload;
     default:
       return state;

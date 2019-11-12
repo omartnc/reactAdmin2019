@@ -32,18 +32,17 @@ if (localStorage.jwtToken) {
   }
 }
 
-const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
+const loading = () => <div id="pageLoadingDiv"></div>;
 const hist = createBrowserHistory();
 class App extends Component {
-
   render() {
     return (
       <Provider store={store}>
-
+        {this.props.loadginReducer ? loading() : ""}
         <React.Suspense fallback={loading()}>
           <Router history={hist}>
             <Switch>
-              <Route exact path="/login"  render={props => <LoginLayout {...props} />} />
+              <Route exact path="/login" render={props => <LoginLayout {...props} />} />
               <PrivateRoute path="/admin" to="/admin/dashboard" render={props => <AdminLayout {...props} />} />
               <PrivateRoute path="/" to="/admin/dashboard" render={props => <AdminLayout {...props} />} />
               <Route component={NotFound} />
@@ -57,7 +56,8 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    authReducer: state.authReducer
+    authReducer: state.authReducer,
+    loadginReducer: state.loadginReducer
   };
 }
 

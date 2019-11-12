@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import * as userActions from "../../redux/actions/authActions";
+import * as loadingActions from "../../redux/actions/loadingActions";
 import { bindActionCreators } from "redux";
 import {
   Button,
@@ -40,6 +41,7 @@ import {
   }
       onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+        this.props.actions.setLoading(true);
       }
   
       onSubmit(e) {
@@ -53,6 +55,7 @@ import {
         this.props.actions.loginUser(userData);
       }
     render() {
+
         return (
            
         <div className="min-h-fullscreen bg-img center-vh p-20  pace-done" style={{backgroundImage:"url(http://dogutech.xyz/Contents/Files/2019/06/11/0b61a1-flz3.jpg)"}}>
@@ -106,7 +109,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
       actions: {
-        loginUser: bindActionCreators(userActions.loginUser, dispatch)
+        loginUser: bindActionCreators(userActions.loginUser, dispatch),
+        setLoading: bindActionCreators(loadingActions.setLoading, dispatch)
       }
   };
 }
