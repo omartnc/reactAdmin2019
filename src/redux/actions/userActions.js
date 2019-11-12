@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
-import  handleResponse from "../../utils/handleResponse";
-import  handleError from "../../utils/handleError";
+import handleResponse from "../../utils/handleResponse";
+import handleError from "../../utils/handleError";
 import axios from 'axios';
 
 
@@ -21,27 +21,26 @@ export function updateUserSuccess(user) {
 export function getUsers() {
     return function (dispatch) {
         let url = "/api/Authorization/users/list";
-      return  axios
-    .get(url)
-    .then(handleResponse)
-    .then(result => dispatch(getUsersSuccess(result)))
-    .catch(handleError);
+        return axios
+            .get(url)
+            .then(handleResponse)
+            .then(result => dispatch(getUsersSuccess(result)))
+            .catch(handleError);
     };
 }
 
 export function saveUserApi(user) {
-    return fetch("", {
-        method: user.id ? "PUT" : "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(user)
-    })
+    debugger;
+    let url = "";
+    user.id ? url = "/api/Auth/update/" + user.id : url = "/api/Auth/register"
+    return axios
+        .post(url, user)
         .then(handleResponse)
         .catch(handleError);
 }
 export function saveUser(user) {
     return function (dispatch) {
         return saveUserApi(user)
-            .then(handleResponse)
             .then(savedUser => {
                 user.id
                     ? dispatch(updateUserSuccess(savedUser))

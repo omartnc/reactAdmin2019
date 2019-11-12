@@ -1,53 +1,89 @@
-import React from "react";
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  FormGroup,
-  Form,
-  Input,
-  Row,
-  Col
-} from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { saveUser,getUsers } from "../../../redux/actions/userActions";
+import UserProfile from "./UserProfile";
+//import { validate } from "@babel/types";
 
-class UserProfile extends React.Component {
-  render() {
-    return (
-      <>
-        <div className="content">
-              <Card>
-                  <Form>
-                <CardHeader>
-                  <h5 className="title">Edit Profile</h5>
-                </CardHeader>
-                <CardBody>
-                    <Row>
-                      <Col className="pr-md-1" md="6">
-                        <FormGroup>
-                          <label>Full Name</label>
-                          <Input
-                            defaultValue="Mike"
-                            placeholder="Company"
-                            type="text"
-                            name="fullName"
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                </CardBody>
-                <CardFooter>
-                  <Button className="btn-fill" color="primary" type="submit">
-                    Save
-                  </Button>
-                </CardFooter>
-                 </Form>
-              </Card>
-        </div>
-      </>
-    );
+function AddOrUpdateUser({
+  users,
+  getUsers,
+  saveUser,
+  history,
+  ...props
+}) {
+  const [user, setUser] = useState({ ...props.user });
+  const [errors, setErrors] = useState({});
+  useEffect(() => {
+    if (users.length === 0) {
+      getUsers();
+    }
+    setUser({ ...props.user });
+  }, [props.user]);
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setUser(previousUser => ({
+      ...previousUser,
+      [name]: value
+    }));
+
+    validate(name, value);
   }
+
+  function validate(name, value) {
+    if (name === "fullName" && value === "") {
+      setErrors(previousErrors => ({
+        ...previousErrors,
+        fullName: "İsim Soyisim olmalıdır"
+      }));
+    } else {
+      setErrors(previousErrors => ({
+        ...previousErrors,
+        fullName: ""
+      }));
+    }
+  }
+
+  function handleSave(event) {
+    event.preventDefault();
+    saveUser(user).then(() => {
+      history.push("/admin/users");
+    });
+  }
+
+  return (
+    <UserProfile
+      user={user}
+      onChange={handleChange}
+      onSave={handleSave}
+      errors={errors}
+    />
+  );
 }
 
-export default UserProfile;
+export function getUserById(users, userId) {
+  let user = users.find(user => user.id == userId) || null;
+  return user;
+}
+
+function mapStateToProps(state, ownProps) {
+  const userId = ownProps.match.params.userId;
+  const user =
+    userId && state.userListReducer.length > 0
+      ? getUserById(state.userListReducer, userId)
+      : {};
+  return {
+    user,
+    users: state.userListReducer
+  };
+}
+
+const mapDispatchToProps = {
+  saveUser,
+  getUsers
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddOrUpdateUser);

@@ -17,7 +17,7 @@
 */
 import Dashboard from "./components/views/Dashboard.jsx";
 import UserList from "./components/views/users/UserList";
-import UserProfile from "./components/views/users/UserProfile";
+import AddOrUpdateUser from "./components/views/users/AddOrUpdateUser";
 
 var routes = [
   {
@@ -41,7 +41,15 @@ var routes = [
     path: "/save-user/:userId",
     name: "User Detail",
     icon: "tim-icons icon-settings-gear-63",
-    component: UserProfile,
+    component: AddOrUpdateUser,
+    layout: "/admin",
+    redirect:true
+  },
+  {
+    path: "/save-user",
+    name: "User Detail",
+    icon: "tim-icons icon-settings-gear-63",
+    component: AddOrUpdateUser,
     layout: "/admin",
     redirect:true
   }

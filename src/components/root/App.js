@@ -39,6 +39,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
+
         <React.Suspense fallback={loading()}>
           <Router history={hist}>
             <Switch>
