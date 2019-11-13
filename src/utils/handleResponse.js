@@ -1,6 +1,9 @@
- async function handleResponse(response) {
-     debugger;
-    if (response.status===200) {
+
+import handleLoading from "./handleLoading";
+async function handleResponse(response) {
+    if (response.status === 200) {
+
+        handleLoading(false);
         return response.data
     }
 

@@ -2,6 +2,7 @@
 import * as  authActions from '../redux/actions/authActions';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import  handleLoading from "./handleLoading";
 
 const ErrorSwal = withReactContent(Swal);
 function handleError(error) {
@@ -19,11 +20,13 @@ function handleError(error) {
 
       }
     }).then(() => {
+      handleLoading(false);
       return error.response.data
     })
 
   }
   if (error.response && error.response.status && error.response.status === 401) {
+    handleLoading(false);
     authActions.logoutUser();
     window.location.href = '/login';
   }

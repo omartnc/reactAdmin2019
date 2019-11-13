@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Row, Card, Col, CardHeader, CardTitle, CardBody } from "reactstrap";
 import { bindActionCreators } from "redux";
-import Moment from 'react-moment';
-import * as userActions from "../../../redux/actions/userActions";
+import * as authorizationActions from "../../../redux/actions/authorizationActions";
 import { Table } from "reactstrap";
 import { Link } from "react-router-dom"
 
-class UserList extends Component {
+class AuthorizationList extends Component {
     componentDidMount() {
-        this.props.actions.getUsers();
+        this.props.actions.getAuthorizations();
     }
     render() {
         return (
@@ -19,8 +18,8 @@ class UserList extends Component {
                     <Col md="12">
                         <Card>
                             <CardHeader>
-                                <CardTitle tag="h4">Users
-                                <Link to="/admin/save-user" className="btn pull-right">Add New</Link>
+                                <CardTitle tag="h4">Authorizations
+                                <Link to="/admin/authorization/save-authorization" className="btn pull-right">Add New</Link>
                                 </CardTitle>
                             </CardHeader>
                             <CardBody>
@@ -28,27 +27,21 @@ class UserList extends Component {
                                     <thead className="text-primary">
                                         <tr>
                                             <th>#</th>
-                                            <th>Kullanıcı Adı</th>
-                                            <th>Email</th>
-                                            <th>Kayıt Tarihi</th>
+                                            <th>Adı</th>
+                                            <th>Açıklaması</th>
                                             <th>Erişim Yetkileri</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {this.props.users.map(user => (
-                                            <tr key={user.id}>
-                                                <th style={{ color: "white" }}>{user.id}</th>
+                                        {this.props.authorizations.map(authorization => (
+                                            <tr key={authorization.id}>
+                                                <th style={{ color: "white" }}>{authorization.id}</th>
                                                 <th style={{ color: "white" }}>
-                                                    {user.fullName + "   "}
-                                                    <Link to={"/admin/save-user/" + user.id}>Edit</Link>
+                                                    {authorization.name + "   "}
+                                                    <Link to={"/admin/authorization/save-authorization/" + authorization.id}>Edit</Link>
                                                 </th>
-                                                <th style={{ color: "white" }}>{user.email}</th>
-                                                <th style={{ color: "white" }}>
-                                                    <Moment format="DD.MM.YYYY HH:mm">
-                                                        {user.creationDate}
-                                                    </Moment>
-                                                </th>
-                                                <td style={{ color: "white" }}>1 Gruop 0 Modül <Link to={"/admin/authorization/save-user-authorization/" + user.id}>Edit</Link></td>
+                                                <th style={{ color: "white" }}>{authorization.description}</th>
+                                                <td style={{ color: "white" }}>1 Gruop 0 Modül <Link to={"/admin/authorization/save-authorization/" + authorization.id}>Edit</Link></td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -64,14 +57,14 @@ class UserList extends Component {
 
 function mapStateToProps(state) {
     return {
-        users: state.userListReducer
+        authorizations: state.authorizationListReducer
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         actions: {
-            getUsers: bindActionCreators(userActions.getUsers, dispatch)
+            getAuthorizations: bindActionCreators(authorizationActions.getAuthorizations, dispatch)
         }
     };
 }
@@ -79,4 +72,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(UserList);
+)(AuthorizationList);

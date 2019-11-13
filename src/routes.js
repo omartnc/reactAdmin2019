@@ -19,6 +19,12 @@ import Dashboard from "./components/views/Dashboard.jsx";
 import UserList from "./components/views/users/UserList";
 import AddOrUpdateUser from "./components/views/users/AddOrUpdateUser";
 
+import AuthorizationList from "./components/views/Authorization/AuthorizationList";
+import AuthorizationEdit from "./components/views/Authorization/AuthorizationEdit";
+import AuthorizationItemEdit from "./components/views/Authorization/AuthorizationItemEdit";
+import UserAuthorizationEdit from "./components/views/Authorization/UserAuthorizationEdit";
+
+
 var routes = [
   {
     path: "/dashboard",
@@ -30,6 +36,8 @@ var routes = [
   {
     name: "System Management"
   },
+
+
   {
     path: "/users",
     name: "Users",
@@ -50,6 +58,56 @@ var routes = [
     name: "User Detail",
     icon: "tim-icons icon-settings-gear-63",
     component: AddOrUpdateUser,
+    layout: "/admin",
+    redirect:true
+  },
+
+
+
+  {
+    path: "/authorization/authorization-list",
+    name: "Authorization List",
+    icon: "tim-icons icon-settings-gear-63",
+    component: AuthorizationList,
+    layout: "/admin"
+  },
+  {
+    path: "/authorization/save-authorization/:authorizationId",
+    name: "Authorization Detail",
+    icon: "tim-icons icon-settings-gear-63",
+    component: AuthorizationEdit,
+    layout: "/admin",
+    redirect:true
+  },
+  {
+    path: "/authorization/save-authorization",
+    name: "Authorization Detail",
+    icon: "tim-icons icon-settings-gear-63",
+    component: AuthorizationEdit,
+    layout: "/admin",
+    redirect:true
+  },
+  {
+    path: "/authorization/save-authorization-item",
+    name: "Authorization Item Detail",
+    icon: "tim-icons icon-settings-gear-63",
+    component: AuthorizationItemEdit,
+    layout: "/admin",
+    redirect:true
+  },
+  {
+    path: "/authorization/save-authorization-item/:authorizationId",
+    name: "Authorization Item Detail",
+    icon: "tim-icons icon-settings-gear-63",
+    component: AuthorizationItemEdit,
+    layout: "/admin",
+    redirect:true
+  },
+  {
+    path: "/authorization/save-user-authorization/:userId",
+    name: "User Authorization Detail",
+    icon: "tim-icons icon-settings-gear-63",
+    component: UserAuthorizationEdit,
     layout: "/admin",
     redirect:true
   }

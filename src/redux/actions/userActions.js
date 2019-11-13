@@ -1,6 +1,7 @@
 import * as actionTypes from "./actionTypes";
 import handleResponse from "../../utils/handleResponse";
 import handleError from "../../utils/handleError";
+import handleLoading from "../../utils/handleLoading";
 import axios from 'axios';
 
 
@@ -21,6 +22,7 @@ export function updateUserSuccess(user) {
 export function getUsers() {
     return function (dispatch) {
         let url = "/api/Authorization/users/list";
+        handleLoading(true);
         return axios
             .get(url)
             .then(handleResponse)
@@ -33,6 +35,7 @@ export function saveUserApi(user) {
     debugger;
     let url = "";
     user.id ? url = "/api/Auth/update/" + user.id : url = "/api/Auth/register"
+    handleLoading(true);
     return axios
         .post(url, user)
         .then(handleResponse)

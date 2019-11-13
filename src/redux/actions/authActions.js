@@ -1,7 +1,8 @@
 import axios from 'axios';
 import setAuthToken from '../../utils/setAuthToken';
-import  handleResponse from "../../utils/handleResponse";
-import  handleError from "../../utils/handleError";
+import handleResponse from "../../utils/handleResponse";
+import handleError from "../../utils/handleError";
+import handleLoading from "../../utils/handleLoading";
 import jwt_decode from 'jwt-decode';
 
 import * as actionTypes from "./actionTypes";
@@ -10,12 +11,13 @@ import * as actionTypes from "./actionTypes";
 
 // Login - Get User Token
 export const loginUser = userData => dispatch => {
+  handleLoading(true);
   axios
     .post('/api/Auth/login', userData)
     .then(handleResponse)
     .then(res => {
       // Save to localStorage
-      const  token  = "Bearer "+res.token;
+      const token = "Bearer " + res.token;
       // Set token to ls
       localStorage.setItem('jwtToken', token);
       // Set token to Auth header
@@ -26,7 +28,7 @@ export const loginUser = userData => dispatch => {
       dispatch(setCurrentUser(decoded));
     })
     .catch(handleError);
-    
+
 };
 
 // Set logged in user

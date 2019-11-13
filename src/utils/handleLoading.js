@@ -1,28 +1,37 @@
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import * as loadingActions from "../redux/actions/loadingActions";
+
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const LoadingSwal = withReactContent(Swal);
 
 
 function handleLoading(isLoading) {
-  this.props.actions.setLoading(isLoading);
+
+  if (isLoading) {
+    LoadingSwal.fire({
+      title: "",
+      text: "",
+      icon: "",
+      buttons: false,
+      width: 600,
+      height:500,
+      showCloseButton: false,
+      showCancelButton: false,
+      showConfirmButton: false,
+      background: '#ffffff00',
+      backdrop: "#ffffffad",
+      html:'<img src="/loadingGif.gif"/>',
+      allowOutsideClick: false,
+      onOpen: () => {
+        // `MySwal` is a subclass of `Swal`
+        //   with all the same instance & static methods
+
+      }
+    })
+  }else{
+    LoadingSwal.close()
+  }
+
 }
 
-function mapStateToProps(state) {
-    return {
-      loadingReducer:state.loadingReducer
-    };
-  }
   
-  
-  function mapDispatchToProps(dispatch) {
-    return {
-      actions: {
-        setLoading: bindActionCreators(loadingActions.setLoading, dispatch),
-      }
-    };
-  }
-  
-  export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(handleLoading);
+  export default handleLoading;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import * as userActions from "../../redux/actions/authActions";
-import * as loadingActions from "../../redux/actions/loadingActions";
 import { bindActionCreators } from "redux";
 import {
   Button,
@@ -41,7 +40,6 @@ import {
   }
       onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
-        this.props.actions.setLoading(true);
       }
   
       onSubmit(e) {
@@ -109,8 +107,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
       actions: {
-        loginUser: bindActionCreators(userActions.loginUser, dispatch),
-        setLoading: bindActionCreators(loadingActions.setLoading, dispatch)
+        loginUser: bindActionCreators(userActions.loginUser, dispatch)
       }
   };
 }

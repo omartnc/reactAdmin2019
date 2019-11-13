@@ -1,7 +1,8 @@
 export default {
-    isLoading:false,
     users: [],
+    authorizations:[],
     currentUser: {},
     isAuthenticated: false,
-    savedUser: {}
+    savedUser: {},
+    savedAuthorization:{}
 }

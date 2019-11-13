@@ -38,7 +38,6 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        {this.props.loadginReducer ? loading() : ""}
         <React.Suspense fallback={loading()}>
           <Router history={hist}>
             <Switch>
@@ -56,8 +55,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    authReducer: state.authReducer,
-    loadginReducer: state.loadginReducer
+    authReducer: state.authReducer
   };
 }
 
