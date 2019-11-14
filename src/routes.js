@@ -88,14 +88,6 @@ var routes = [
     redirect:true
   },
   {
-    path: "/authorization/save-authorization-item",
-    name: "Authorization Item Detail",
-    icon: "tim-icons icon-settings-gear-63",
-    component: AuthorizationItemEdit,
-    layout: "/admin",
-    redirect:true
-  },
-  {
     path: "/authorization/save-authorization-item/:authorizationId",
     name: "Authorization Item Detail",
     icon: "tim-icons icon-settings-gear-63",

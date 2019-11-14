@@ -3,13 +3,15 @@ import userListReducer from "./userListReducer"
 import saveUserReducer from "./saveUserReducer"
 import authReducer from "./authReducer"
 import authorizationListReducer from "./authorizationListReducer"
+import savedAuthorizationReducer from "./savedAuthorizationReducer"
 
 
 const rootReducer = combineReducers({
     userListReducer,
     saveUserReducer,
     authReducer,
-    authorizationListReducer
+    authorizationListReducer,
+    savedAuthorizationReducer
 })
 
 export default rootReducer;

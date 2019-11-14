@@ -34,7 +34,7 @@ export function getAuthorizations() {
 export function saveAuthorizationApi(authorization) {
     debugger;
     let url = "";
-    authorization.id ? url = "/api/Auth/update/" + authorization.id : url = "/api/Auth/register"
+    authorization.id ? url = "/api/Authorization/authorisation-group/edit/" + authorization.id : url = "/api/Authorization/authorisation-group/edit"
     handleLoading(true);
     return axios
         .post(url, authorization)

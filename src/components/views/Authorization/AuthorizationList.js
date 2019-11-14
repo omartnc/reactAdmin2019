@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Row, Card, Col, CardHeader, CardTitle, CardBody } from "reactstrap";
 import { bindActionCreators } from "redux";
 import * as authorizationActions from "../../../redux/actions/authorizationActions";
-import { Table } from "reactstrap";
+import { Table, Badge } from "reactstrap";
 import { Link } from "react-router-dom"
 
 class AuthorizationList extends Component {
@@ -41,7 +41,11 @@ class AuthorizationList extends Component {
                                                     <Link to={"/admin/authorization/save-authorization/" + authorization.id}>Edit</Link>
                                                 </th>
                                                 <th style={{ color: "white" }}>{authorization.description}</th>
-                                                <td style={{ color: "white" }}>1 Gruop 0 Modül <Link to={"/admin/authorization/save-authorization/" + authorization.id}>Edit</Link></td>
+                                                <th style={{ color: "white" }}>
+                                                    <Badge color="secondary">2</Badge> Ana,
+                                                    <Badge color="secondary">9</Badge> Alt Yetki Grubu Seçili {" "}
+                                                    <Link to={"/admin/authorization/save-authorization-item/" + authorization.id}>Edit</Link>
+                                                </th>
                                             </tr>
                                         ))}
                                     </tbody>

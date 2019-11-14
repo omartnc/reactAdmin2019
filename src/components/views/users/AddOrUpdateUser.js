@@ -18,7 +18,7 @@ function AddOrUpdateUser({
       getUsers();
     }
     setUser({ ...props.user });
-  }, [props.user]);
+  }, [getUsers, props.user, users.length]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -62,7 +62,10 @@ function AddOrUpdateUser({
 }
 
 export function getUserById(users, userId) {
-  let user = users.find(user => user.id == userId) || null;
+  var userIdInt = parseInt(userId)
+  if (!userIdInt)
+      return null;
+  let user = users.find(user => user.id === userIdInt) || null;
   return user;
 }
 
