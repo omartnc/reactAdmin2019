@@ -74,7 +74,6 @@ function AuthorizationEdit({
                                 <FormGroup>
                                     <label>Name</label>
                                     <Input
-                                        defaultValue=""
                                         placeholder="Enter Name..."
                                         type="text"
                                         name="name"
@@ -88,7 +87,6 @@ function AuthorizationEdit({
                                 <FormGroup>
                                     <label>Description</label>
                                     <Input
-                                        defaultValue=""
                                         placeholder="Enter Description..."
                                         type="text"
                                         name="description"

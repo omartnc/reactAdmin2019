@@ -32,7 +32,6 @@ export function getUsers() {
 }
 
 export function saveUserApi(user) {
-    debugger;
     let url = "";
     user.id ? url = "/api/Auth/update/" + user.id : url = "/api/Auth/register"
     handleLoading(true);

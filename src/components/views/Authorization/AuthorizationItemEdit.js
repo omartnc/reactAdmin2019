@@ -1,50 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect,useState } from "react";
 import { connect } from "react-redux"; import {
     Button,
     Card,
     CardHeader,
     CardBody,
     CardFooter,
-    FormGroup,
     Form,
-    Input,
     Row,
     Col
 } from "reactstrap";
-import { saveAuthorization, getAuthorizations } from "../../../redux/actions/authorizationActions";
+import { saveAuthorizationItems, getAuthorizationItems } from "../../../redux/actions/authorizationItemActions";
 
 
 function AuthorizationItemEdit({
-    authorizations,
-    getAuthorizations,
-    saveAuthorization,
+    authorizationItems,
+    getAuthorizationItems,
+    saveAuthorizationItems,
     history,
     ...props
 }) {
-    const [authorization, setAuthorization] = useState({ ...props.authorization });
-    const [errors] = useState({});
+
+
+
+    const [ setPostAuthorizationItems] = useState({ postAuthorizationItems });
+
     useEffect(() => {
-        if (authorizations.length === 0) {
-            getAuthorizations();
-        }
-        setAuthorization({ ...props.authorization });
-    }, [authorizations.length, getAuthorizations, props.authorization]);
+        const authorizationId = props.match.params.authorizationId;
+        var authorizationIdInt = parseInt(authorizationId)
+        if (!authorizationIdInt)
+            return null;
+        getAuthorizationItems(authorizationId);
+       
+    }, [getAuthorizationItems, props]);
 
     function handleChange(event) {
-        const { name, value } = event.target;
-        setAuthorization(previousAuthorization => ({
-            ...previousAuthorization,
-            [name]: value
-        }));
-
+        const { name, checked,value } = event.target;
+        // setPostAuthorizationItems(previousAuthorization => ({
+        //      postAuthorizationItems: previousAuthorization.postAuthorizationItems.set(name, checked,value) 
+        // }));
+        //https://medium.com/@wlodarczyk_j/handling-multiple-checkboxes-in-react-js-337863fd284e
     }
-
 
     function handleSave(event) {
         event.preventDefault();
-        saveAuthorization(authorization).then(() => {
-            history.push("/admin/authorization/authorization-list");
-        });
+        // saveAuthorizationItem(authorizationItem).then(() => {
+        //     history.push("/admin/authorization/authorization-list");
+        // });
     }
 
     return (
@@ -52,38 +53,26 @@ function AuthorizationItemEdit({
             <Card>
                 <Form onSubmit={handleSave}>
                     <CardHeader>
-                        <h5 className="title">{authorization.id ? "Edit" : "Add"} authorization</h5>
+                        <h5 className="title">Edit Authorization Item</h5>
                     </CardHeader>
                     <CardBody>
                         <Row>
-                            <Col className="pr-md-1" md="6">
-                                <FormGroup>
-                                    <label>Name</label>
-                                    <Input
-                                        defaultValue=""
-                                        placeholder="Enter Name..."
-                                        type="text"
-                                        name="name"
-                                        value={authorization.name}
-                                        onChange={handleChange}
-                                        error={errors.name}
-                                    />
-                                </FormGroup>
-                            </Col>
-                            <Col className="pr-md-1" md="6">
-                                <FormGroup>
-                                    <label>Description</label>
-                                    <Input
-                                        defaultValue=""
-                                        placeholder="Enter Description..."
-                                        type="text"
-                                        name="description"
-                                        value={authorization.description}
-                                        onChange={handleChange}
-                                        error={errors.description}
-                                    />
-                                </FormGroup>
-                            </Col>
+                            {authorizationItems.modules ? authorizationItems.modules.map((moduleItem, index) => (
+                                <Col key={moduleItem.id} className="pr-md-1" md="12">
+                                    <div className="custom-control custom-switch">
+                                        <input
+                                            type="checkbox"
+                                            className="custom-control-input"
+                                            id={"customSwitch" + moduleItem.id}
+                                            name={"id"}
+                                            checked={authorizationItems.roleModules.some(x => x === moduleItem.id)}
+                                            value={moduleItem.id}
+                                            onChange={handleChange}
+                                        />
+                                        <label className="custom-control-label" htmlFor={"customSwitch" + moduleItem.id}>{moduleItem.name}</label>
+                                    </div>
+                                </Col>
+                            )) : null}
                         </Row>
                     </CardBody>
                     <CardFooter>
@@ -97,29 +86,29 @@ function AuthorizationItemEdit({
     );
 }
 
-export function getAuthorizationById(authorizations, authorizationId) {
+export function getAuthorizationItemById(authorizationItems, authorizationId) {
     var authorizationIdInt = parseInt(authorizationId)
     if (!authorizationIdInt)
         return null;
-    let authorization = authorizations.find(authorization => authorization.id === authorizationIdInt) || null;
-    return authorization;
+    let authorizationItem = authorizationItems.find(authorization => authorization.role.id === authorizationIdInt) || null;
+    return authorizationItem;
 }
 
 function mapStateToProps(state, ownProps) {
     const authorizationId = ownProps.match.params.authorizationId;
-    const authorization =
-        authorizationId && state.authorizationListReducer.length > 0
-            ? getAuthorizationById(state.authorizationListReducer, authorizationId)
+    const authorizationItem =
+        authorizationId && state.authorizationItemListReducer.length > 0
+            ? getAuthorizationItemById(state.authorizationItemListReducer, authorizationId)
             : {};
     return {
-        authorization,
-        authorizations: state.authorizationListReducer
+        authorizationItem,
+        authorizationItems: state.authorizationItemListReducer
     };
 }
 
 const mapDispatchToProps = {
-    saveAuthorization,
-    getAuthorizations
+    saveAuthorizationItems,
+    getAuthorizationItems
 };
 
 export default connect(

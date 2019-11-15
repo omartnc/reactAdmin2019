@@ -4,6 +4,8 @@ import saveUserReducer from "./saveUserReducer"
 import authReducer from "./authReducer"
 import authorizationListReducer from "./authorizationListReducer"
 import savedAuthorizationReducer from "./savedAuthorizationReducer"
+import authorizationItemListReducer from "./authorizationItemListReducer"
+import savedAuthorizationItemsReducer from "./savedAuthorizationItemsReducer"
 
 
 const rootReducer = combineReducers({
@@ -11,7 +13,9 @@ const rootReducer = combineReducers({
     saveUserReducer,
     authReducer,
     authorizationListReducer,
-    savedAuthorizationReducer
+    savedAuthorizationReducer,
+    authorizationItemListReducer,
+    savedAuthorizationItemsReducer
 })
 
 export default rootReducer;
