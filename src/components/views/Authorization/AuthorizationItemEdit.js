@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux"; import {
     Button,
     Card,
@@ -19,24 +19,24 @@ function AuthorizationItemEdit({
     history,
     ...props
 }) {
-
-
-
-    const [ setPostAuthorizationItems] = useState({ postAuthorizationItems });
-
+    const [authorizationItem, setAuthorizationItem] = useState({ ...props.authorizationItem });
     useEffect(() => {
         const authorizationId = props.match.params.authorizationId;
         var authorizationIdInt = parseInt(authorizationId)
         if (!authorizationIdInt)
             return null;
-        getAuthorizationItems(authorizationId);
-       
-    }, [getAuthorizationItems, props]);
+
+        if (!authorizationItems.role || authorizationItems.role.id !== authorizationIdInt) {
+            getAuthorizationItems(authorizationId);
+            setAuthorizationItem({ ...props.authorizationItem });
+        }
+
+    }, [authorizationItems, getAuthorizationItems, props]);
 
     function handleChange(event) {
-        const { name, checked,value } = event.target;
-        // setPostAuthorizationItems(previousAuthorization => ({
-        //      postAuthorizationItems: previousAuthorization.postAuthorizationItems.set(name, checked,value) 
+        //const { name, checked, value } = event.target;
+        // setAuthorizationItem(previousAuthorization => ({
+        //     authorizationItem: previousAuthorization.authorizationItem.set(name, checked, value)
         // }));
         //https://medium.com/@wlodarczyk_j/handling-multiple-checkboxes-in-react-js-337863fd284e
     }
@@ -53,11 +53,11 @@ function AuthorizationItemEdit({
             <Card>
                 <Form onSubmit={handleSave}>
                     <CardHeader>
-                        <h5 className="title">Edit Authorization Item</h5>
+                        <h5 className="title">Edit Authorizations Item</h5>
                     </CardHeader>
                     <CardBody>
                         <Row>
-                            {authorizationItems.modules ? authorizationItems.modules.map((moduleItem, index) => (
+                            {authorizationItem.modules ? authorizationItem.modules.map((moduleItem, index) => (
                                 <Col key={moduleItem.id} className="pr-md-1" md="12">
                                     <div className="custom-control custom-switch">
                                         <input
@@ -65,7 +65,7 @@ function AuthorizationItemEdit({
                                             className="custom-control-input"
                                             id={"customSwitch" + moduleItem.id}
                                             name={"id"}
-                                            checked={authorizationItems.roleModules.some(x => x === moduleItem.id)}
+                                            checked={authorizationItem.roleModules.some(x => x === moduleItem.id)}
                                             value={moduleItem.id}
                                             onChange={handleChange}
                                         />
@@ -87,19 +87,18 @@ function AuthorizationItemEdit({
 }
 
 export function getAuthorizationItemById(authorizationItems, authorizationId) {
-    var authorizationIdInt = parseInt(authorizationId)
-    if (!authorizationIdInt)
-        return null;
-    let authorizationItem = authorizationItems.find(authorization => authorization.role.id === authorizationIdInt) || null;
+
+    let authorizationItem = authorizationItems.find(authorization => authorization.role.id === authorizationId) || null;
     return authorizationItem;
 }
 
 function mapStateToProps(state, ownProps) {
-    const authorizationId = ownProps.match.params.authorizationId;
+    var authorizationIdInt = parseInt(ownProps.match.params.authorizationId)
     const authorizationItem =
-        authorizationId && state.authorizationItemListReducer.length > 0
-            ? getAuthorizationItemById(state.authorizationItemListReducer, authorizationId)
+        authorizationIdInt && (!state.authorizationItemListReducer.role || state.authorizationItemListReducer.role.id !== authorizationIdInt)
+            ? getAuthorizationItemById(state.authorizationItemListReducer, authorizationIdInt)
             : {};
+    console.log(authorizationItem);
     return {
         authorizationItem,
         authorizationItems: state.authorizationItemListReducer

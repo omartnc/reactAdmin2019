@@ -3,7 +3,7 @@ import { bindActionCreators } from "redux";
 import { connect, Provider } from "react-redux";
 import store from '../../redux/reducers/store';
 import { createBrowserHistory } from "history";
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch ,Redirect} from "react-router-dom";
 import jwt_decode from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
 import { setCurrentUser, logoutUser } from '../../redux/actions/authActions';
@@ -42,6 +42,9 @@ class App extends Component {
           <Router history={hist}>
             <Switch>
               <Route exact path="/login" render={props => <LoginLayout {...props} />} />
+              <Route exact path="/"><Redirect to="/admin/dashboard" /></Route>
+              <Route exact path="/admin"><Redirect to="/admin/dashboard" /></Route>
+              
               <PrivateRoute path="/admin" to="/admin/dashboard" render={props => <AdminLayout {...props} />} />
               <PrivateRoute path="/" to="/admin/dashboard" render={props => <AdminLayout {...props} />} />
               <Route component={NotFound} />

@@ -7,7 +7,6 @@ const PrivateRoute = ({ component: Component, authReducer,to , ...rest}) => (
   
   <Route
     {...rest}
-    to={to}
     render={props =>
       authReducer.isAuthenticated === true ? (
         <AdminLayout  {...props} />
