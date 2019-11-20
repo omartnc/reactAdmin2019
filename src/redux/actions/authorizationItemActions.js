@@ -21,7 +21,6 @@ export function updateAuthorizationItemsSuccess(authorizationItems) {
 
 
 export function getAuthorizationItems(authorizationId) {
-    debugger;
     return function (dispatch) {
         let url = "/api/Authorization/authorisation-group-permissions/edit/"+authorizationId;
         handleLoading(true);

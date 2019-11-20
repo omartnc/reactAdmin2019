@@ -86,19 +86,21 @@ function AuthorizationItemEdit({
     );
 }
 
-export function getAuthorizationItemById(authorizationItems, authorizationId) {
-
-    let authorizationItem = authorizationItems.find(authorization => authorization.role.id === authorizationId) || null;
-    return authorizationItem;
-}
+// export function getAuthorizationItemById(authorizationItems, authorizationId) {
+//     debugger;
+//     if (!authorizationItems.role)
+//         return null;
+//     let authorizationItem = authorizationItems.role.id === authorizationId?authorizationItems: null;
+//     console.log(authorizationItem);
+//     return authorizationItem;
+// }
 
 function mapStateToProps(state, ownProps) {
     var authorizationIdInt = parseInt(ownProps.match.params.authorizationId)
     const authorizationItem =
-        authorizationIdInt && (!state.authorizationItemListReducer.role || state.authorizationItemListReducer.role.id !== authorizationIdInt)
-            ? getAuthorizationItemById(state.authorizationItemListReducer, authorizationIdInt)
+        authorizationIdInt
+            ? state.authorizationItemListReducer
             : {};
-    console.log(authorizationItem);
     return {
         authorizationItem,
         authorizationItems: state.authorizationItemListReducer
