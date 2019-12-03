@@ -19,7 +19,7 @@ class AuthorizationList extends Component {
                         <Card>
                             <CardHeader>
                                 <CardTitle tag="h4">Authorizations
-                                <Link to="/admin/authorization/save-authorization" className="btn pull-right">Add New</Link>
+                                <Link path="/admin/authorization/save-authorization" className="btn pull-right">Add New</Link>
                                 </CardTitle>
                             </CardHeader>
                             <CardBody>

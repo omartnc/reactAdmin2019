@@ -28,8 +28,8 @@ function AuthorizationItemEdit({
 
         if (!authorizationItems.role || authorizationItems.role.id !== authorizationIdInt) {
             getAuthorizationItems(authorizationId);
-            setAuthorizationItem({ ...props.authorizationItem });
         }
+            setAuthorizationItem({ ...props.authorizationItem });
 
     }, [authorizationItems, getAuthorizationItems, props]);
 
@@ -86,20 +86,20 @@ function AuthorizationItemEdit({
     );
 }
 
-// export function getAuthorizationItemById(authorizationItems, authorizationId) {
-//     debugger;
-//     if (!authorizationItems.role)
-//         return null;
-//     let authorizationItem = authorizationItems.role.id === authorizationId?authorizationItems: null;
-//     console.log(authorizationItem);
-//     return authorizationItem;
-// }
+export function getAuthorizationItemById(authorizationItems, authorizationId) {
+    debugger;
+    if (!authorizationItems.role)
+        return null;
+    let authorizationItem = authorizationItems.role.id === authorizationId?authorizationItems: null;
+    console.log(authorizationItem);
+    return authorizationItem;
+}
 
 function mapStateToProps(state, ownProps) {
     var authorizationIdInt = parseInt(ownProps.match.params.authorizationId)
     const authorizationItem =
         authorizationIdInt
-            ? state.authorizationItemListReducer
+            ? getAuthorizationItemById(state.authorizationItemListReducer, authorizationIdInt)
             : {};
     return {
         authorizationItem,
